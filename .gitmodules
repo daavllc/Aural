@@ -1,0 +1,3 @@
+[submodule "pyLaunch"]
+	path = pyLaunch
+	url = https://github.com/daavofficial/pyLaunch.git

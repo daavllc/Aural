@@ -1,0 +1,32 @@
+{
+    "Version": "1.0.1",
+    "MinimumVersion": "1.0.1",
+    "UI": "GUI",
+    "Setup": {
+        "PythonVersion": "3.10",
+        "MinimumPythonVersion": "3.10",
+        "Packages": {
+            "dearpygui": "dearpygui"
+        },
+        "PythonFolder": "Python310"
+    },
+    "Update": {
+        "Organization": "daavofficial",
+        "Repository": "Aural",
+        "Branch": "main",
+        "VersionPath": "src/helpers/config.py",
+        "Find": "VERSION = ",
+        "Token": null,
+        "SkipCheck": false
+    },
+    "Launch": {
+        "ProjectRoot": "..",
+        "ProjectMain": "src/main.py",
+        "ErrorCodes": {
+            "-1": "",
+            "-2": "-UI CUI",
+            "-3": "-UI GUI"
+        },
+        "SkipCheck": false
+    }
+}
