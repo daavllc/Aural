@@ -12,3 +12,9 @@ class AudioCablePanel:
 
         self.AudioCableExplorer = AudioCableExplorerPanel()
         self.AudioCableEditor = AudioCableEditorPanel()
+
+    def GetPanels(self):
+        panels = {}
+        for panel in {self.AudioCableExplorer, self.AudioCableEditor}:
+            panels[panel.Panel] = panel.Pre
+        return panels

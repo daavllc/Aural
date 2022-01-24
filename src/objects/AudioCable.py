@@ -5,36 +5,39 @@ import uuid
 
 from helpers.timer import Timer
 
+class Type(Enum):
+        PCM = auto() # Wave Format
+        ExtPCM = auto() # Wave Format Extensible
+
+class State(Enum):
+    NEW = auto()
+    STOP = auto()
+    ACQUIRE = auto()
+    PAUSE = auto()
+    RUN = auto()
+
+class SampleRate(Enum):
+    hz22050 = 22050
+    hz44100 = 44100
+    hz48000 = 48000
+    hz88200 = 88200
+    hz96000 = 96000
 class AudioCable:
     """
     A Virtual Audio Cable instance
         Contains details about the VAC:
          Name, Sample Rate Min/Max, Bits Per Sample Min/Max, State, Latency Time, Channels Min/Max
-         UUID, Process ID, Thread ID, Life time, Type, FMS transferred
+         Process ID, Thread ID, Life time, Type, FMS transferred
     TODO: Clock Correction Ratio, Capture/Render Port Type
     """
-    class Type(Enum):
-        PCM = auto() # Wave Format
-        ExtPCM = auto() # Wave Format Extensible
-
-    class State(Enum):
-        STOP = auto()
-        ACQUIRE = auto()
-        PAUSE = auto()
-        RUN = auto()
-
-    class SampleRate(Enum):
-        hz22050 = 22050
-        hz44100 = 44100
-        hz48000 = 48000
-        hz88200 = 88200
-        hz96000 = 96000
+    def __init__(self):
+        self._Generate()
 
     def _Generate(self):
-        self.Settings = dict(
-            Name = None,
-            SampleRateMin = self.SampleRate.hz44100,
-            SampleRateMax = self.SampleRate.hz44100,
+        self.Configuration = dict(
+            Name = "Default Audio Cable",
+            SampleRateMin = SampleRate.hz44100,
+            SampleRateMax = SampleRate.hz44100,
             BitsPerSampleMin = 8,
             BitsPerSampleMax = 16,
             ChannelsMin = 1,
@@ -43,15 +46,20 @@ class AudioCable:
                 UUID = uuid.uuid4(),
                 ProcessID = None,
                 ThreadID = None,
-                State = None,
+                State = State.NEW,
                 Type = None
             ),
             Stats = dict(
                 LifeTime = None,
-                FMsTransferred = None # Audio Frames transfered since creation
+                FramesTransferred = None # Audio Frames transfered since creation
             )
         )
-        Timer.Get().Add(str(self.Settings['Internal']['UUID']))
 
-    def _Update(self):
-        self.Settings['Stats']['LifeTime'] = Timer.Get().GetElapsed(str(self.Settings['Internal']['UUID']))
+    def GetUUID(self) -> uuid.UUID:
+        return self.Configuration['Internal']['UUID']
+
+    def GetConfiguration(self) -> dict:
+        return self.Configuration
+
+    def SetConfiguration(self, config: dict) -> None:
+        self.Configuration = config

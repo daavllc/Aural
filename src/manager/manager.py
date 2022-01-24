@@ -1,8 +1,9 @@
 from manager._controller import Controller
-
 from manager.command import Command
-
 from helpers.logger import Logger
+
+from manager.AudioCable.AudioCableManager import AudioCableManager
+from manager.Route.RouteManager import RouteManager
 
 class Manager:
     """
@@ -21,8 +22,24 @@ class Manager:
         if Manager.__instance is not None:
             raise Exception("Manager attempted to re-init")
         else:
+            Manager.__instance = self
             self.Controller = Controller()
             self.log = Logger("Aural.Manager", "manager.log")
+
+            self.AudioCableManager = AudioCableManager(self)
+            self.RouteManager = RouteManager(self)
+
+    def AudioCables(self):
+        return self.AudioCableManager
+    
+    def Routes(self):
+        return self.RouteManager
+
+    def SaveRoutes(self):
+        pass
+
+    def SaveAudioCables(self):
+        pass
 
     # Controller abstractions
     def Execute(self, cmd: Command) -> None:
@@ -48,7 +65,4 @@ class Manager:
         for item in self.GetTimeline():
             print(" --- HISTORY --- ")
             print(f"{item[1]} at {item[0]}")
-
-    def Save(self):
-        pass
 

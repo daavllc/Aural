@@ -25,7 +25,7 @@ class PanelManager:
     def Select(self, Routes: bool, AudioCable: bool = None):
         if AudioCable is None:
             AudioCable = not Routes
-        dpg.configure_item("RouteExplorer", show=Routes)
-        dpg.configure_item("RouteEditor", show=Routes)
-        dpg.configure_item("AudioCableExplorer", show=AudioCable)
-        dpg.configure_item("AudioCableEditor", show=AudioCable)
+        for panelName in self.RoutePanel.GetPanels().keys():
+            dpg.configure_item(panelName, show=Routes)
+        for panelName in self.AudioCablePanel.GetPanels().keys():
+            dpg.configure_item(panelName, show=AudioCable)

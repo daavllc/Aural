@@ -8,6 +8,7 @@ from helpers.logger import Logger
 
 import interface
 from settings.Settings import Settings
+from settings.Configuration import Configuration
 
 log = Logger("Aural", "aural.log")
 
@@ -37,8 +38,8 @@ def main():
     if sys.version is not None:
         log.debug(f"Using Python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}")
 
-    settings = Settings()
-    config.SETTINGS = settings.Get()
+    config.SETTINGS = Settings()
+    config.CONFIGURATION = Configuration()
 
     # Begin
     if args.UI == "CUI":
